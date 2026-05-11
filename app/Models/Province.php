@@ -8,7 +8,9 @@ class Province extends Model
 {
     protected $fillable = ['name'];
 
-    public function regencies() {
+    // Satu Provinsi memiliki banyak Kabupaten [cite: 18, 116]
+    public function regencies()
+    {
         return $this->hasMany(Regency::class);
-    }   
+    }
 }

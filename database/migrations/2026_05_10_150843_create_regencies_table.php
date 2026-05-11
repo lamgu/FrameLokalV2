@@ -1,23 +1,29 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Regency extends Model
+return new class extends Migration
 {
-    // Mass Assignment: kolom yang boleh diisi [cite: 104]
-    protected $fillable = ['province_id', 'name'];
-
-    // Relasi balik ke Provinsi (Parent) [cite: 18, 105]
-    public function province()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
-        return $this->belongsTo(Province::class);
+        Schema::create('regencies', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('province_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->timestamps();
+        });
     }
 
-    // Satu kabupaten bisa memiliki banyak film [cite: 105]
-    public function films()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
-        return $this->hasMany(Film::class);
+        Schema::dropIfExists('regencies');
     }
-}
+};

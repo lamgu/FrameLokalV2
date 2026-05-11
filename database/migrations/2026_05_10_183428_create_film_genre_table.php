@@ -6,12 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        // Tabel pivot ini menghubungkan film dan genre (Many-to-Many) [cite: 7]
+        // Tabel pivot ini menghubungkan film dan genre (Many-to-Many) 
         Schema::create('film_genre', function (Blueprint $table) {
             $table->id();
             
@@ -24,10 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
+ 
     public function down(): void
     {
         Schema::dropIfExists('film_genre');
