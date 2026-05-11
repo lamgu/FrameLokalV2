@@ -23,7 +23,7 @@ Route::get('/', function () {
 */
 
 // Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -48,7 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-// require __DIR__.'/auth.php'; // Uncomment jika menggunakan Breeze
+require __DIR__.'/auth.php'; // Uncomment jika menggunakan Breeze
 
 /*
 |--------------------------------------------------------------------------
