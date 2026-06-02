@@ -88,14 +88,14 @@
 
             <p class="text-[10px] text-gray-600 tracking-[2px] uppercase px-5 pt-5 pb-1.5">Komunitas</p>
 
-            <a href="#"
-               class="sidebar-link flex items-center gap-3 px-5 py-2.5 text-[13px] text-gray-400 hover:text-gray-100 hover:bg-surface-2 transition-colors">
+            <a href="{{ route('admin.reviews.index') }}"
+               class="sidebar-link flex items-center gap-3 px-5 py-2.5 text-[13px] text-gray-400 hover:text-gray-100 hover:bg-surface-2 transition-colors {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
                 <i class="ti ti-message w-[18px] text-base"></i> Ulasan
                 <span class="ml-auto nav-badge">{{ \App\Models\Review::count() }}</span>
             </a>
 
-            <a href="#"
-               class="sidebar-link flex items-center gap-3 px-5 py-2.5 text-[13px] text-gray-400 hover:text-gray-100 hover:bg-surface-2 transition-colors">
+            <a href="{{ route('admin.users.index') }}"
+               class="sidebar-link flex items-center gap-3 px-5 py-2.5 text-[13px] text-gray-400 hover:text-gray-100 hover:bg-surface-2 transition-colors {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="ti ti-users w-[18px] text-base"></i> Pengguna
             </a>
 
