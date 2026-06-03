@@ -10,6 +10,9 @@
     <div>
         <p class="text-gray-400 text-sm">Total <span class="text-[#f5c518] font-medium">{{ $users->total() }}</span> pengguna terdaftar</p>
     </div>
+    <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-2 bg-[#f5c518] hover:bg-[#f5c518]/90 text-black px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+        <i class="ti ti-plus"></i> Tambah Pengguna
+    </a>
 </div>
 
 {{-- FILTER BAR --}}

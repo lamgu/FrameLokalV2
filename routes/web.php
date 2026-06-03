@@ -51,7 +51,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('reviews', ReviewController::class)->only(['index', 'show', 'destroy']);
 
     // User Management
-    Route::resource('users', UserController::class)->only(['index', 'destroy']);
+    Route::resource('users', UserController::class)->only(['index', 'create', 'store', 'destroy']);
     Route::patch('users/{user}/role', [UserController::class, 'updateRole'])->name('users.updateRole');
 });
 
