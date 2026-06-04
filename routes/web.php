@@ -3,8 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FilmController;
-use App\Http\Controllers\Admin\GenreController;  // Buat jika belum ada
-use App\Http\Controllers\Admin\ProvinceController; // Buat jika belum ada
+use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\ProvinceController;
+use App\Http\Controllers\Admin\RegencyController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +43,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Lokasi (Province)
     Route::resource('provinces', ProvinceController::class);
+    
+    // Lokasi (Regency - nested inside Province)
+    Route::resource('provinces.regencies', RegencyController::class)->only(['store', 'update', 'destroy']);
+
+    // Ulasan (Review)
+    Route::resource('reviews', ReviewController::class)->only(['index', 'show', 'destroy']);
+
+    // User Management
+    Route::resource('users', UserController::class)->only(['index', 'create', 'store', 'destroy']);
+    Route::patch('users/{user}/role', [UserController::class, 'updateRole'])->name('users.updateRole');
 });
 
 /*
