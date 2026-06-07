@@ -8,15 +8,58 @@ use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\RegencyController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\ExploreController;
+use App\Http\Controllers\User\MapController;
+use App\Http\Controllers\Api\FilmApiController;
+use App\Http\Controllers\Api\ReviewApiController;
+use App\Http\Controllers\User\FilmController as UserFilmController;
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes
+| Public User Routes
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard'); // Ganti ke public homepage nanti
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/eksplorasi', [ExploreController::class, 'index'])->name('explore');
+Route::get('/peta', [MapController::class, 'index'])->name('map');
+Route::get('/film/{identifier}', [UserFilmController::class, 'show'])->name('film.show');
+
+/*
+|--------------------------------------------------------------------------
+| Public API Endpoints
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('api')->name('api.')->group(function () {
+    Route::get('/films/featured',  [FilmApiController::class, 'featured'])->name('films.featured');
+    Route::get('/films/latest',    [FilmApiController::class, 'latest'])->name('films.latest');
+    Route::get('/films/top-rated', [FilmApiController::class, 'topRated'])->name('films.topRated');
+    Route::get('/films/explore',   [FilmApiController::class, 'explore'])->name('films.explore');
+    Route::get('/genres',          [FilmApiController::class, 'genres'])->name('genres');
+
+    // Film Detail
+    Route::get('/films/{identifier}', [FilmApiController::class, 'show'])->name('films.show');
+
+    // Rating & Comments (Separated)
+    Route::get('/films/{film}/rating-status', [ReviewApiController::class, 'ratingStatus'])->name('films.ratingStatus');
+    Route::get('/films/{film}/raters',        [ReviewApiController::class, 'raters'])->name('films.raters');
+    Route::post('/films/{film}/ratings',      [ReviewApiController::class, 'storeRating'])->name('films.storeRating')->middleware('auth');
+    
+    Route::get('/films/{film}/comments',      [ReviewApiController::class, 'comments'])->name('films.comments');
+    Route::post('/films/{film}/comments',     [ReviewApiController::class, 'storeComment'])->name('films.storeComment')->middleware('auth');
+    Route::delete('/comments/{review}',       [ReviewApiController::class, 'destroyComment'])->name('comments.destroy')->middleware('auth');
+
+    // Replies
+    Route::post('/comments/{review}/replies', [ReviewApiController::class, 'storeReply'])->name('replies.store')->middleware('auth');
+    Route::delete('/replies/{reply}',         [ReviewApiController::class, 'destroyReply'])->name('replies.destroy')->middleware('auth');
+
+    // User Activity (authenticated)
+    Route::middleware('auth')->group(function () {
+        Route::get('/user/ratings',  [ReviewApiController::class, 'userRatings'])->name('user.ratings');
+        Route::get('/user/comments', [ReviewApiController::class, 'userComments'])->name('user.comments');
+    });
 });
 
 /*
@@ -26,7 +69,7 @@ Route::get('/', function () {
 */
 
 // Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -60,6 +103,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 | Auth Routes (gunakan Laravel Breeze / Fortify / manual)
 |--------------------------------------------------------------------------
 */
+
+use App\Http\Controllers\ProfileController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 require __DIR__.'/auth.php'; // Uncomment jika menggunakan Breeze
 
