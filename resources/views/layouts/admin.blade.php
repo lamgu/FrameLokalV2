@@ -117,9 +117,12 @@
                     <p class="text-[13px] font-medium">{{ auth()->user()->name ?? 'Admin' }}</p>
                     <span class="text-[11px] text-gray-500">Super Admin</span>
                 </div>
-                <a href="#" title="Logout" class="ml-auto text-gray-500 hover:text-[#f5c518] transition-colors">
-    <i class="ti ti-logout text-base"></i>
-</a>
+                <form method="POST" action="{{ route('logout') }}" class="ml-auto">
+                    @csrf
+                    <button type="submit" title="Logout" class="text-gray-500 hover:text-[#f5c518] transition-colors">
+                        <i class="ti ti-logout text-base"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </aside>
@@ -141,9 +144,9 @@
                 <i class="ti ti-bell text-base"></i>
                 <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#f5c518] rounded-full border border-surface"></span>
             </button>
-            <button class="w-9 h-9 rounded-lg border border-white/[0.07] bg-surface-2 flex items-center justify-center text-gray-400 hover:text-[#f5c518] hover:border-[#c9a014] transition-colors">
+            <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-lg border border-white/[0.07] bg-surface-2 flex items-center justify-center text-gray-400 hover:text-[#f5c518] hover:border-[#c9a014] transition-colors">
                 <i class="ti ti-user text-base"></i>
-            </button>
+            </a>
         </header>
 
         {{-- FLASH MESSAGES --}}
@@ -162,6 +165,22 @@
             <i class="ti ti-alert-circle text-base flex-shrink-0"></i>
             {{ session('error') }}
             <button onclick="document.getElementById('flash-error').remove()" class="ml-auto text-red-400/60 hover:text-red-400">
+                <i class="ti ti-x text-sm"></i>
+            </button>
+        </div>
+        @endif
+
+        @if(session('status'))
+        <div class="mx-7 mt-5 flex items-center gap-3 bg-green-500/10 border border-green-500/30 text-green-400 rounded-xl px-4 py-3 text-sm" id="flash-status">
+            <i class="ti ti-circle-check text-base flex-shrink-0"></i>
+            @if(session('status') === 'profile-updated')
+                Profil berhasil diperbarui.
+            @elseif(session('status') === 'password-updated')
+                Sandi berhasil diubah.
+            @else
+                {{ session('status') }}
+            @endif
+            <button onclick="document.getElementById('flash-status').remove()" class="ml-auto text-green-400/60 hover:text-green-400">
                 <i class="ti ti-x text-sm"></i>
             </button>
         </div>

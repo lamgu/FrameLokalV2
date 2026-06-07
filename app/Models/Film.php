@@ -26,4 +26,16 @@ class Film extends Model
     {
         return $this->belongsToMany(Genre::class, 'film_genre');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function recalculateRating()
+    {
+        $avg = $this->reviews()->whereNotNull('rating')->where('rating', '>', 0)->avg('rating');
+        $this->rating = $avg ? round($avg, 1) : 0;
+        $this->save();
+    }
 }

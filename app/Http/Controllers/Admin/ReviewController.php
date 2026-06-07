@@ -31,7 +31,11 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
+        $film = $review->film;
         $review->delete();
+        if ($film) {
+            $film->recalculateRating();
+        }
         return redirect()->route('admin.reviews.index')->with('success', 'Ulasan berhasil dihapus.');
     }
 }
