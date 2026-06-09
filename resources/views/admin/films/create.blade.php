@@ -128,6 +128,17 @@
                 @enderror
             </div>
 
+            {{-- Link Trailer YouTube --}}
+            <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+                <label class="block text-[11px] text-gray-500 uppercase tracking-[1.5px] mb-2">Link Trailer YouTube</label>
+                <input type="url" name="trailer_url" value="{{ old('trailer_url') }}"
+                       placeholder="https://youtube.com/watch?v=..."
+                       class="w-full bg-surface-2 border @error('trailer_url') border-red-500/60 @else border-white/[0.07] @enderror rounded-lg px-4 py-2.5 text-[14px] text-gray-100 placeholder-gray-500 outline-none focus:border-[#c9a014] transition-colors font-sans">
+                @error('trailer_url')
+                    <p class="mt-1.5 text-[12px] text-red-400 flex items-center gap-1"><i class="ti ti-alert-circle text-xs"></i> {{ $message }}</p>
+                @enderror
+            </div>
+
             {{-- SUBMIT --}}
             <div class="flex flex-col gap-2.5">
                 <button type="submit"

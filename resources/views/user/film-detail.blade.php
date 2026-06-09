@@ -47,137 +47,140 @@
         <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-[#0a0a0a]/30"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/90 via-[#0a0a0a]/40 to-transparent"></div>
 
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-14 flex flex-col lg:flex-row gap-10 lg:gap-14 items-start">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 py-14">
 
-            {{-- ── Poster Column ── --}}
-            <div class="w-full lg:w-72 xl:w-80 flex-shrink-0 flex flex-col gap-5">
-
-                {{-- Poster --}}
-                <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-white/10 aspect-[2/3]">
-                    <img id="film-poster" src="" alt="Poster Film"
-                         class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start mb-8">
+                {{-- ── Poster Column ── --}}
+                <div class="w-full lg:w-72 xl:w-80 flex-shrink-0 flex flex-col gap-5">
+                    {{-- Poster --}}
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-white/10 aspect-[2/3]">
+                        <img id="film-poster" src="" alt="Poster Film"
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    </div>
                 </div>
 
-                {{-- ══ RATING WIDGET ══ --}}
-                <div class="bg-[#111] rounded-2xl border border-white/10 overflow-hidden shadow-xl">
-                    {{-- Header --}}
-                    <div class="px-4 pt-4 pb-3 border-b border-white/[0.07]">
-                        <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Rating Film</p>
+                {{-- ── Info Column ── --}}
+                <div class="flex-1 min-w-0 pt-0 lg:pt-3">
+                    {{-- Genre tags --}}
+                    <div id="film-genres" class="flex flex-wrap gap-2 mb-4"></div>
+
+                    {{-- Title --}}
+                    <h1 id="film-title" class="font-display text-5xl sm:text-6xl lg:text-7xl text-white tracking-wide leading-none mb-4"></h1>
+
+                    {{-- Meta row --}}
+                    <div class="flex flex-wrap items-center gap-3 mb-7">
+                        <span id="film-year" class="flex items-center gap-1.5 text-sm text-gray-300 bg-white/5 px-3 py-1 rounded-lg border border-white/10">
+                            <i class="ti ti-calendar-event text-gray-500 text-sm"></i>
+                        </span>
+                        <span id="film-location" class="flex items-center gap-1.5 text-sm text-gray-300 bg-white/5 px-3 py-1 rounded-lg border border-white/10">
+                            <i class="ti ti-map-pin text-gray-500 text-sm"></i>
+                        </span>
+                        <div class="flex items-center gap-2 bg-[#f5c518]/10 border border-[#f5c518]/20 px-3 py-1 rounded-lg">
+                            <i class="ti ti-star-filled text-[#f5c518] text-sm"></i>
+                            <span id="film-avg-rating" class="text-sm font-bold text-[#f5c518]">–</span>
+                        </div>
                     </div>
 
-                    {{-- Score Display --}}
-                    <div class="px-4 pt-3 pb-3 flex items-center gap-3">
-                        <div class="relative w-14 h-14 flex-shrink-0">
-                            <svg class="w-14 h-14 -rotate-90" viewBox="0 0 56 56">
+                    {{-- Synopsis --}}
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-3">Sinopsis</h3>
+                        <p id="film-synopsis" class="text-gray-300 text-base leading-relaxed max-w-2xl"></p>
+                    </div>
+
+                    {{-- Action Buttons --}}
+                    <div class="flex flex-wrap gap-3">
+                        <a id="trailer-btn" target="_blank" class="hidden flex items-center gap-2.5 bg-[#f5c518] hover:bg-[#c9a014] text-black font-bold px-7 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#f5c518]/25 hover:shadow-[#f5c518]/40 text-sm">
+                            <i class="ti ti-device-tv text-base"></i> Putar Trailer
+                        </a>
+                        <button id="share-btn" class="flex items-center gap-2.5 bg-white/8 hover:bg-white/15 text-white font-semibold px-6 py-3 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-200 text-sm">
+                            <i class="ti ti-share-2 text-base"></i> Bagikan
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {{-- ══ HORIZONTAL RATING WIDGET ══ --}}
+            <div class="bg-[#111] rounded-2xl border border-white/10 overflow-hidden shadow-xl">
+                {{-- Header --}}
+                <div class="px-5 py-3 border-b border-white/[0.07]">
+                    <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Penilaian & Ulasan Penonton</p>
+                </div>
+
+                <div class="p-5 grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch divide-y md:divide-y-0 md:divide-x divide-white/[0.07]">
+                    
+                    {{-- Col 1: Score Display --}}
+                    <div class="flex flex-col justify-center items-center text-center pb-4 md:pb-0">
+                        <div class="relative w-16 h-16 mb-2">
+                            <svg class="w-16 h-16 -rotate-90" viewBox="0 0 56 56">
                                 <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="4"/>
                                 <circle id="rating-ring" cx="28" cy="28" r="24" fill="none" stroke="#f5c518" stroke-width="4"
                                         stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8"
                                         style="transition: stroke-dashoffset 0.8s ease"/>
                             </svg>
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <span id="rating-ring-text" class="text-xs font-bold text-[#f5c518]">0.0</span>
+                                <span id="rating-ring-text" class="text-sm font-bold text-[#f5c518]">0.0</span>
                             </div>
                         </div>
-                        <div>
-                            <div id="rating-stars-display" class="flex gap-0.5 mb-1"></div>
-                            <p id="rating-total-text" class="text-[11px] text-gray-400">0 penilaian</p>
+                        <div id="rating-stars-display" class="flex gap-0.5 mb-1 justify-center"></div>
+                        <p id="rating-total-text" class="text-[11px] text-gray-400">0 penilaian</p>
+                    </div>
+
+                    {{-- Col 2: Percentage Bars --}}
+                    <div class="flex flex-col justify-center px-0 md:px-5 py-4 md:py-0">
+                        <div id="rating-bars" class="space-y-1.5">
+                            {{-- filled by JS --}}
                         </div>
                     </div>
 
-                    {{-- Percentage Bars per star --}}
-                    <div id="rating-bars" class="px-4 pb-3 space-y-1.5">
-                        {{-- filled by JS --}}
-                    </div>
-
-                    {{-- User Input --}}
-                    <div class="px-4 py-3 border-t border-white/[0.07] relative">
-                        <div id="rating-submit-overlay" class="hidden absolute inset-0 bg-[#111]/80 backdrop-blur-sm flex items-center justify-center z-10">
+                    {{-- Col 3: User Input --}}
+                    <div class="flex flex-col justify-center items-center text-center relative px-0 md:px-5 py-4 md:py-0">
+                        <div id="rating-submit-overlay" class="hidden absolute inset-0 bg-[#111]/85 backdrop-blur-sm flex items-center justify-center z-10">
                             <div class="w-5 h-5 border-2 border-t-[#f5c518] border-white/10 rounded-full animate-spin"></div>
                         </div>
-                        <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-2">Penilaian Anda</p>
+                        <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-3">Berikan Nilai</p>
                         @auth
-                            <div id="star-input" class="flex items-center gap-1 flex-row-reverse justify-end star-input-group">
+                            <div id="star-input" class="flex items-center gap-1.5 flex-row-reverse justify-center star-input-group">
                                 @for ($s = 5; $s >= 1; $s--)
                                     <input type="radio" id="rate{{ $s }}" name="user_rating" value="{{ $s }}" class="sr-only" onchange="submitRating({{ $s }})">
-                                    <label for="rate{{ $s }}" class="cursor-pointer text-gray-600 hover:text-[#f5c518] transition-colors text-2xl">
+                                    <label for="rate{{ $s }}" class="cursor-pointer text-gray-600 hover:text-[#f5c518] transition-colors text-3xl">
                                         <i class="ti ti-star-filled"></i>
                                     </label>
                                 @endfor
                             </div>
-                            <div id="rating-saved-msg" class="hidden mt-2 flex items-center gap-1.5 text-xs text-green-400">
-                                <i class="ti ti-check"></i> Rating tersimpan!
+                            <div id="rating-saved-msg" class="hidden mt-2 flex items-center gap-1.5 text-xs text-green-400 justify-center">
+                                <i class="ti ti-check"></i> Rating disimpan!
                             </div>
                         @else
-                            <a href="{{ route('login') }}" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5c518] text-xs font-semibold hover:bg-[#f5c518]/10 transition-colors">
+                            <a href="{{ route('login') }}" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-[#f5c518] text-xs font-semibold hover:bg-[#f5c518]/10 transition-colors w-full max-w-[180px]">
                                 <i class="ti ti-login"></i> Masuk untuk menilai
                             </a>
                         @endauth
                     </div>
 
-                    {{-- Scrollable Raters List --}}
-                    <div class="border-t border-white/[0.07]">
-                        <div class="px-4 py-2.5 flex items-center justify-between">
+                    {{-- Col 4: Scrollable Raters List --}}
+                    <div class="flex flex-col justify-between pl-0 md:pl-5 pt-4 md:pt-0">
+                        <div class="flex items-center justify-between mb-2">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Pemberi Rating</p>
                             <span id="raters-count-badge" class="text-[10px] text-gray-600"></span>
                         </div>
-                        <div id="raters-list-container" class="h-40 overflow-y-auto px-2 pb-2" style="scrollbar-width: thin; scrollbar-color: #333 transparent;">
+                        <div id="raters-list-container" class="h-28 overflow-y-auto pr-1" style="scrollbar-width: thin; scrollbar-color: #333 transparent;">
                             <div id="raters-list-loading" class="h-full flex items-center justify-center">
                                 <div class="w-5 h-5 border-2 border-t-[#f5c518] border-white/10 rounded-full animate-spin"></div>
                             </div>
                             <div id="raters-list-empty" class="hidden h-full flex flex-col items-center justify-center text-center">
-                                <i class="ti ti-star-off text-xl text-gray-700 mb-1"></i>
-                                <p class="text-[11px] text-gray-600">Belum ada yang memberi rating</p>
+                                <i class="ti ti-star-off text-lg text-gray-700 mb-1"></i>
+                                <p class="text-[10px] text-gray-600">Belum ada rating</p>
                             </div>
                             <div id="raters-list" class="hidden space-y-0.5">
                                 {{-- Filled by JS --}}
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
 
-            {{-- ── Info Column ── --}}
-            <div class="flex-1 min-w-0 pt-0 lg:pt-3">
-
-                {{-- Genre tags --}}
-                <div id="film-genres" class="flex flex-wrap gap-2 mb-4"></div>
-
-                {{-- Title --}}
-                <h1 id="film-title" class="font-display text-5xl sm:text-6xl lg:text-7xl text-white tracking-wide leading-none mb-4"></h1>
-
-                {{-- Meta row --}}
-                <div class="flex flex-wrap items-center gap-3 mb-7">
-                    <span id="film-year" class="flex items-center gap-1.5 text-sm text-gray-300 bg-white/5 px-3 py-1 rounded-lg border border-white/10">
-                        <i class="ti ti-calendar-event text-gray-500 text-sm"></i>
-                    </span>
-                    <span id="film-location" class="flex items-center gap-1.5 text-sm text-gray-300 bg-white/5 px-3 py-1 rounded-lg border border-white/10">
-                        <i class="ti ti-map-pin text-gray-500 text-sm"></i>
-                    </span>
-                    <div class="flex items-center gap-2 bg-[#f5c518]/10 border border-[#f5c518]/20 px-3 py-1 rounded-lg">
-                        <i class="ti ti-star-filled text-[#f5c518] text-sm"></i>
-                        <span id="film-avg-rating" class="text-sm font-bold text-[#f5c518]">–</span>
-                    </div>
-                </div>
-
-                {{-- Synopsis --}}
-                <div class="mb-8">
-                    <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-3">Sinopsis</h3>
-                    <p id="film-synopsis" class="text-gray-300 text-base leading-relaxed max-w-2xl"></p>
-                </div>
-
-                {{-- Action Buttons --}}
-                <div class="flex flex-wrap gap-3">
-                    <button class="flex items-center gap-2.5 bg-[#f5c518] hover:bg-[#c9a014] text-black font-bold px-7 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-[#f5c518]/25 hover:shadow-[#f5c518]/40 text-sm">
-                        <i class="ti ti-device-tv text-base"></i> Putar Trailer
-                    </button>
-                    <button id="share-btn" class="flex items-center gap-2.5 bg-white/8 hover:bg-white/15 text-white font-semibold px-6 py-3 rounded-xl border border-white/10 hover:border-white/20 transition-all duration-200 text-sm">
-                        <i class="ti ti-share-2 text-base"></i> Bagikan
-                    </button>
-                </div>
-
-            </div>
         </div>
     </section>
 
@@ -481,6 +484,15 @@ async function fetchFilmDetails() {
         $('film-synopsis').textContent = film.synopsis || 'Sinopsis belum tersedia.';
         $('film-year').innerHTML     = `<i class="ti ti-calendar-event text-gray-500 text-sm"></i> ${film.year || '–'}`;
         $('film-location').innerHTML = `<i class="ti ti-map-pin text-gray-500 text-sm"></i> ${film.location || 'Indonesia'}`;
+
+        // Trailer
+        const trailerBtn = $('trailer-btn');
+        if (film.trailer_url) {
+            trailerBtn.href = film.trailer_url;
+            trailerBtn.classList.remove('hidden');
+        } else {
+            trailerBtn.classList.add('hidden');
+        }
 
         // Genres
         $('film-genres').innerHTML = (film.genres || [])

@@ -51,7 +51,7 @@
     <aside class="w-[220px] bg-surface border-r border-white/[0.07] flex flex-col flex-shrink-0">
 
         {{-- Brand --}}
-        <div class="flex items-center gap-3 px-5 py-6 border-b border-white/[0.07]">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 px-5 py-6 border-b border-white/[0.07] hover:opacity-90 transition-opacity">
             <div class="w-9 h-9 bg-[#f5c518] rounded-lg flex items-center justify-center flex-shrink-0">
                 <i class="ti ti-movie text-black text-lg"></i>
             </div>
@@ -59,7 +59,7 @@
                 <div class="font-display text-xl tracking-widest text-[#f5c518]">Frame-Lokal</div>
                 <div class="text-[10px] text-gray-500 tracking-[2px] uppercase">Admin Panel</div>
             </div>
-        </div>
+        </a>
 
         {{-- Nav --}}
         <nav class="flex-1 py-4 overflow-y-auto">
@@ -101,8 +101,8 @@
 
             <p class="text-[10px] text-gray-600 tracking-[2px] uppercase px-5 pt-5 pb-1.5">Sistem</p>
 
-            <a href="#"
-               class="sidebar-link flex items-center gap-3 px-5 py-2.5 text-[13px] text-gray-400 hover:text-gray-100 hover:bg-surface-2 transition-colors">
+            <a href="{{ route('admin.settings') }}"
+               class="sidebar-link flex items-center gap-3 px-5 py-2.5 text-[13px] text-gray-400 hover:text-gray-100 hover:bg-surface-2 transition-colors {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                 <i class="ti ti-settings w-[18px] text-base"></i> Pengaturan
             </a>
         </nav>
@@ -134,16 +134,16 @@
         <header class="bg-surface border-b border-white/[0.07] h-[58px] flex items-center gap-4 px-7 flex-shrink-0">
             <h1 class="font-display text-[22px] tracking-wide text-[#f5c518] flex-1">@yield('page-title', 'Dashboard')</h1>
 
-            <div class="flex items-center gap-2 bg-surface-2 border border-white/[0.07] rounded-lg px-3 py-1.5 w-56">
+            <form action="{{ route('admin.films.index') }}" method="GET" class="flex items-center gap-2 bg-surface-2 border border-white/[0.07] rounded-lg px-3 py-1.5 w-56">
                 <i class="ti ti-search text-gray-500 text-[15px]"></i>
-                <input type="text" placeholder="Cari film, genre..."
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari film, genre..."
                        class="bg-transparent border-none outline-none text-[13px] text-gray-100 placeholder-gray-500 w-full font-sans">
-            </div>
+            </form>
 
-            <button class="relative w-9 h-9 rounded-lg border border-white/[0.07] bg-surface-2 flex items-center justify-center text-gray-400 hover:text-[#f5c518] hover:border-[#c9a014] transition-colors">
+            <a href="{{ route('admin.notifications') }}" class="relative w-9 h-9 rounded-lg border border-white/[0.07] bg-surface-2 flex items-center justify-center text-gray-400 hover:text-[#f5c518] hover:border-[#c9a014] transition-colors {{ request()->routeIs('admin.notifications') ? 'text-[#f5c518] border-[#c9a014]' : '' }}">
                 <i class="ti ti-bell text-base"></i>
                 <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#f5c518] rounded-full border border-surface"></span>
-            </button>
+            </a>
             <a href="{{ route('profile.edit') }}" class="w-9 h-9 rounded-lg border border-white/[0.07] bg-surface-2 flex items-center justify-center text-gray-400 hover:text-[#f5c518] hover:border-[#c9a014] transition-colors">
                 <i class="ti ti-user text-base"></i>
             </a>

@@ -22,6 +22,7 @@ use App\Http\Controllers\User\FilmController as UserFilmController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/eksplorasi', [ExploreController::class, 'index'])->name('explore');
 Route::get('/peta', [MapController::class, 'index'])->name('map');
 Route::get('/film/{identifier}', [UserFilmController::class, 'show'])->name('film.show');
@@ -73,6 +74,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/notifications', [DashboardController::class, 'notifications'])->name('notifications');
+    Route::get('/settings', [DashboardController::class, 'settings'])->name('settings');
 
     // Film CRUD
     Route::resource('films', FilmController::class);
