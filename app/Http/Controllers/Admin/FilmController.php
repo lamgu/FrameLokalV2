@@ -10,9 +10,22 @@ use Illuminate\Support\Facades\Storage;
 
 class FilmController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $films  = Film::with(['regency.province', 'genres'])->latest()->get();
+        $query = Film::with(['regency.province', 'genres']);
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('synopsis', 'like', "%{$search}%")
+                  ->orWhereHas('genres', function($g) use ($search) {
+                      $g->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $films  = $query->latest()->get();
         $genres = Genre::all();
         $years  = Film::distinct()->orderByDesc('year')->pluck('year');
 
@@ -34,6 +47,7 @@ class FilmController extends Controller
             'regency_id' => 'required|exists:regencies,id',
             'synopsis'   => 'required',
             'year'       => 'required|integer|min:1950|max:' . (date('Y') + 2),
+            'trailer_url'=> 'nullable|url',
             'poster'     => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'genres'     => 'required|array',
             'genres.*'   => 'exists:genres,id',
@@ -47,6 +61,7 @@ class FilmController extends Controller
             'regency_id' => $request->regency_id,
             'synopsis'   => $request->synopsis,
             'year'       => $request->year,
+            'trailer_url'=> $request->trailer_url,
             'poster'     => $posterPath,
             'rating'     => 0,
         ]);
@@ -73,6 +88,7 @@ class FilmController extends Controller
             'regency_id' => 'required|exists:regencies,id',
             'synopsis'   => 'required',
             'year'       => 'required|integer|min:1950|max:' . (date('Y') + 2),
+            'trailer_url'=> 'nullable|url',
             'poster'     => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'genres'     => 'required|array',
             'genres.*'   => 'exists:genres,id',
@@ -84,6 +100,7 @@ class FilmController extends Controller
             'regency_id' => $request->regency_id,
             'synopsis'   => $request->synopsis,
             'year'       => $request->year,
+            'trailer_url'=> $request->trailer_url,
         ];
 
         if ($request->hasFile('poster')) {

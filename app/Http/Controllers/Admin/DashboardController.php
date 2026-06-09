@@ -30,4 +30,20 @@ class DashboardController extends Controller
             'recentReviews'   => Review::with(['user', 'film'])->latest()->take(5)->get(),
         ]);
     }
+
+    public function settings()
+    {
+        return view('admin.settings');
+    }
+
+    public function notifications()
+    {
+        // Fetch recent logs dynamically from the database to populate notifications
+        // E.g., latest reviews, latest registered users, etc.
+        $recentUsers = User::latest()->take(5)->get();
+        $recentReviews = Review::with(['user', 'film'])->latest()->take(5)->get();
+        $recentFilms = Film::latest()->take(5)->get();
+
+        return view('admin.notifications', compact('recentUsers', 'recentReviews', 'recentFilms'));
+    }
 }

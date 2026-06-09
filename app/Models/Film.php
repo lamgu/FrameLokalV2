@@ -12,6 +12,7 @@ class Film extends Model
         'title', 
         'slug', 
         'poster', 
+        'trailer_url',
         'synopsis', 
         'year', 
         'rating'

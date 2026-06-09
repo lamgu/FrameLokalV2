@@ -97,7 +97,7 @@
                     <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
                     <a href="{{ route('explore') }}" class="nav-link {{ request()->routeIs('explore') ? 'active' : '' }}">Eksplorasi</a>
                     <a href="{{ route('map') }}" class="nav-link {{ request()->routeIs('map') ? 'active' : '' }}">Peta Film</a>
-                    <a href="#" class="nav-link">About Us</a>
+                    <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About Us</a>
                 </div>
 
                 <!-- Right -->
@@ -135,7 +135,7 @@
                 <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
                 <a href="{{ route('explore') }}" class="nav-link {{ request()->routeIs('explore') ? 'active' : '' }}">Eksplorasi</a>
                 <a href="{{ route('map') }}" class="nav-link {{ request()->routeIs('map') ? 'active' : '' }}">Peta Film</a>
-                <a href="#" class="nav-link">About Us</a>
+                <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About Us</a>
                 @auth
                     <a href="{{ route('profile.edit') }}" class="nav-link">Profil</a>
                     <form method="POST" action="{{ route('logout') }}">
@@ -164,7 +164,7 @@
                 </div>
                 <p class="text-xs text-gray-600 text-center">Merayakan sinema lokal Indonesia. &copy; {{ date('Y') }} Frame Lokal. Seluruh hak dilindungi.</p>
                 <div class="flex items-center gap-4 text-xs text-gray-600">
-                    <a href="#" class="hover:text-gray-400 transition-colors">Tentang</a>
+                    <a href="{{ route('about') }}" class="hover:text-gray-400 transition-colors">Tentang</a>
                     <a href="#" class="hover:text-gray-400 transition-colors">Kebijakan</a>
                     <a href="#" class="hover:text-gray-400 transition-colors">Kontak</a>
                 </div>
